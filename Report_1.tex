@@ -1,0 +1,62 @@
+\documentclass{report}
+\usepackage[latin1]{inputenc}
+\usepackage{xspace}
+\usepackage[francais]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{graphicx} 
+\usepackage{bm}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\title{Hand recognition on a video with active contour}
+\author{Paul Schreiner, Antun Aleksa}
+\date{28/11/2016}
+
+\begin{document}
+\maketitle
+
+
+
+\section*{1. Two ideas for color based hand detection}
+
+\subsection*{Backprojection detection}
+
+If the hand is in the center of the image, we can select a small square at the center of the image which will be on this hand. Its histogram gives a description of the pixel colors of the hand. We then use the backprojection algorithm to detect the whole hand: we use the histogram computed with the small rectangle to record how well the pixels of the whole image fit the distribution in this histogram using this algorithm. This method is quite effective even in poor lighting conditions, but the hand on the first video image needs to be centered. 
+
+\subsection*{YUV color space}
+
+The skin can be easily detected using the YUV color space: Y represents intensity and U,V (Cb,Cr) represent chromatic distances to pure blue or pure red. Intensity is not very significant to detect skin, but we can find narrow intervals for U and V which represent skin color. However, this method might not work in poor lighting conditions. 
+
+
+
+\section*{2. Active Contour detection}
+
+\section*{3. Algorithm}
+
+\begin{enumerate}
+
+\item \textbf{Hand detection} (Backprojection algorithm or YUV space color detection)
+
+\item \textbf{Noise filtering} (not implemented yet)
+
+\item \textbf{Initialization of the snake} (not implemented yet)
+
+\item \textbf{Active contour detection} (parameters to optimize)
+
+\end{enumerate}
+
+\section*{4. Tools}
+
+\textbf{Language:} Python\\
+
+\textbf{Libraries:} OpenCV (Color detection), Scikit-Image (Active Contour)\\
+
+
+
+
+
+
+\end{document}
