@@ -1,11 +1,11 @@
 \documentclass{report}
 \usepackage[latin1]{inputenc}
 \usepackage{xspace}
-\usepackage[francais]{babel}
+%\usepackage[francais]{babel}
 \usepackage[T1]{fontenc}
-\usepackage{algorithm}
-\usepackage{algorithmic}
-\usepackage{graphicx} 
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{graphicx} 
 \usepackage{bm}
 \usepackage{subcaption}
 \usepackage{amsmath}
@@ -34,11 +34,13 @@ The skin can be easily detected using the YUV color space: Y represents intensit
 
 \section*{2. Active Contour detection}
 
+Active contour model is used to detect an outline of a certain object in an image. This model is apropriate for our problem because it is used when the approximate shape of the boundary is known from before (in our case the shape of a hand) and it can be used to track dynamic objects. 
+
 \section*{3. Algorithm}
 
 \begin{enumerate}
 
-\item \textbf{Hand detection} (Backprojection algorithm or YUV space color detection)
+\item \textbf{Hand detection} (Backprojection algorithm or YUV space color detection)\\- currently testing which one is better in terms of precision and speed
 
 \item \textbf{Noise filtering} (not implemented yet)
 
@@ -49,6 +51,8 @@ The skin can be easily detected using the YUV color space: Y represents intensit
 \end{enumerate}
 
 \section*{4. Tools}
+
+We chose python because we are familiar with the language and we have a lot of great libraried on our disposal. We decided to use OpenCV to detect colors and run the backprojection or YUV color detection on the image, and Scikit-Image because of it's built in function which can be use to find the active contour. \\
 
 \textbf{Language:} Python\\
 
