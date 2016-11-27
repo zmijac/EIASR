@@ -40,7 +40,8 @@ The skin can be easily detected using the YUV color space: Y represents intensit
 
 \section*{2. Active Contour detection}
 
-Active contour model is used to detect an outline of a certain object in an image. This model is apropriate for our problem because it is used when the approximate shape of the boundary is known from before (in our case the shape of a hand) and it can be used to track dynamic objects. 
+Active contour model is used to detect an outline of a certain object in an image. This model is apropriate for our problem because it is used when the approximate shape of the boundary is known from before (in our case the shape of a hand) and it can be used to track dynamic objects. \\
+The snake curves to fit the object by minimizing it's predefined energy. The energy of the snake is defined as a sum of internal and external forces which affect it's shape. The main parameters that influence the snake's shaping behaviour are $\alpha$, $\beta$ , $\gamma$ . Parameter $\alpha$ minimizes the contour length, $\beta$ is the shape smoothness parameter and $\gamma$ parameter minimizes the contour's distance from the image edges.
 
 \begin{figure}[H]
 \centering
