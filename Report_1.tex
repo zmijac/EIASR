@@ -26,12 +26,6 @@
 
 If the hand is in the center of the image, we can select a small square at the center of the image which will be on this hand. Its histogram gives a description of the pixel colors of the hand. We then use the backprojection algorithm to detect the whole hand: we use the histogram computed with the small rectangle to record how well the pixels of the whole image fit the distribution in this histogram using this algorithm. This method is quite effective even in poor lighting conditions, but the hand on the first video image needs to be centered. 
 
-\begin{figure}[H]
-\centering
-              \includegraphics[scale=0.1]{res}
-              \caption{Result of Backprojection in poor lighting}
-          \end{figure}
-
 \subsection*{YUV color space}
 
 The skin can be easily detected using the YUV color space: Y represents intensity and U,V (Cb,Cr) represent chromatic distances to pure blue or pure red. Intensity is not very significant to detect skin, but we can find narrow intervals for U and V which represent skin color. However, this method might not work in poor lighting conditions. 
@@ -41,13 +35,9 @@ The skin can be easily detected using the YUV color space: Y represents intensit
 \section*{2. Active Contour detection}
 
 Active contour model is used to detect an outline of a certain object in an image. This model is apropriate for our problem because it is used when the approximate shape of the boundary is known from before (in our case the shape of a hand) and it can be used to track dynamic objects. \\
-The snake curves to fit the object by minimizing it's predefined energy. The energy of the snake is defined as a sum of internal and external forces which affect it's shape. The main parameters that influence the snake's shaping behaviour are $\alpha$, $\beta$ , $\gamma$ . Parameter $\alpha$ minimizes the contour length, $\beta$ is the shape smoothness parameter and $\gamma$ parameter minimizes the contour's distance from the image edges.
+The snake curves to fit the object by minimizing it's predefined energy. The energy of the snake is defined as a sum of internal and external forces which affect it's shape. The main parameters that influence the snake's shaping behaviour are $\alpha$, $\beta$ , $\gamma$ . Parameter $\alpha$ defines the contour length, $\beta$ is the shape smoothness parameter and $\gamma$ parameter defines the contour's distance from the image edges.
 
-\begin{figure}[H]
-\centering
-              \includegraphics[scale=0.2]{res1}
-              \caption{Naive use of the Active Contour algorithm}
-          \end{figure}
+
 
 \section*{3. Algorithm}
 
@@ -55,7 +45,6 @@ The snake curves to fit the object by minimizing it's predefined energy. The ene
 
 \item \textbf{Hand detection}\\
 Backprojection algorithm or YUV space color detection. 
-We are currently testing which one is better in terms of precision and speed
 
 \item \textbf{Noise filtering}\\
 We must find a method to remove the unwanted detected elements
@@ -76,6 +65,66 @@ We chose python because we are familiar with the language and we have a lot of l
 
 \textbf{Libraries:} OpenCV (Color detection), Scikit-Image (Active Contour)\\
 
+\newpage
+\section*{5. First Results}
+
+\begin{figure}[H]
+							\begin{center}
+							\includegraphics[width=0.5\linewidth]{hand2.jpg}
+              \caption*{Initial Image}
+							\end{center}
+\end{figure}
+
+\subsection*{Backprojection detection}
+
+We run the backprojection algorithm returnig a color mask several times until hand is well recognized. 
+
+\begin{figure}[H]
+							\begin{center}
+							\includegraphics[width=0.5\linewidth]{final.jpg}
+              \caption*{Color mask}
+							\end{center}
+\end{figure}
+
+\subsection*{Snake Initialization}
+
+\textbf{Algorithm:} We start top left of the image. We go through the column until we find a white pixel, and mark him as the next point for the initial snake. We then go through the next column and repeat this until all columns have been visited. The same thing is done starting from bottom right and moving left. 
+
+\begin{figure}[H]
+							\begin{center}
+							\includegraphics[width=0.5\linewidth]{initial_contour.png}
+              \caption*{Initial Snake}
+							\end{center}
+\end{figure}
+
+\subsection*{Active Contour}
+
+\textbf{Parameters:}
+
+$ \alpha =0.1 $ Small value of elastic energy in order to keep the snake long enough to adapt to the hand. 
+
+$ \beta =10 $ High value of stiffness energy to favour the curving of the snake to adapt to the hand.
+
+$ \gamma =0.01 $  
+
+ \begin{figure}[H]
+							\begin{center}
+							\includegraphics[width=0.5\linewidth]{contour.png}
+              \caption*{Final Snake}
+							\end{center}
+\end{figure}
+
+ \begin{figure}[H]
+							\begin{center}
+							\includegraphics[width=0.5\linewidth]{final_contour.png}
+							\end{center}
+\end{figure}
+
+\section*{6. Problems}
+
+\textbf{Snake size:} The snake can only shrink. If the initial snake isn't long enough, it cannot adapt to the hand properly, especially between fingers. \\
+
+\textbf{Noise:} The algorithm is efficient if no noise is detected in the image. 
 
 
 
